@@ -1,0 +1,19 @@
+services:
+    werkint_cache.service:
+        class: Werkint\Bundle\CacheBundle\Service\Redis
+        arguments:
+            - %werkint_redis_connection%
+    werkint.redis.provider:
+        class: Werkint\Bundle\CacheBundle\Service\RedisCache
+        abstract: true
+    werkint.redis.session:
+        class: Werkint\Bundle\CacheBundle\Service\RedisSessionHandler
+        arguments:
+            - @werkint_cache.service
+            - @=parameter('session.storage.options')
+            - @=parameter('werkint_redis')['session']['prefix']
+    werkint.redis.doctrinecacher:
+        class: Werkint\Bundle\CacheBundle\Service\DoctrineCacher
+        parent: werkint.redis.provider
+        tags:
+            - { name: werkint.redis.cacheservice, ns: werkint.doctrine }
