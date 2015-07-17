@@ -1,7 +1,7 @@
 {
     "name":        "werkint/cache-bundle",
     "type":        "symfony-bundle",
-    "description": "Bundle providing Redis (namespaced) for services via tags",
+    "description": "Bundle providing improved cacheprovider injection into services",
     "license":     "GPL-3.0+",
     "authors":     [
         {
@@ -13,12 +13,11 @@
         "doctrine/common":          "*",
         "symfony/framework-bundle": "*",
 
-        "php": ">=5.5"
+        "php": ">=5.6"
     },
     "autoload":    {
         "psr-4": {
-            "Werkint\\Bundle\\CacheBundle\\":        "src/",
-            "Werkint\\Bundle\\CacheBundle\\Tests\\": "tests/"
+            "Werkint\\Bundle\\CacheBundle\\":        "src/"
         }
     },
     "extra":       {

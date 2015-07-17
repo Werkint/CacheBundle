@@ -1,19 +1,15 @@
+parameters:
+  werkint_cache.metadata.annotationdriver.class:
+    Werkint\Bundle\CacheBundle\Service\Metadata\AnnotationDriver
+  werkint_cache.metadata.metadatafactory.class:
+    Metadata\MetadataFactory
+
 services:
-    werkint_cache.service:
-        class: Werkint\Bundle\CacheBundle\Service\Redis
-        arguments:
-            - %werkint_redis_connection%
-    werkint.redis.provider:
-        class: Werkint\Bundle\CacheBundle\Service\RedisCache
-        abstract: true
-    werkint.redis.session:
-        class: Werkint\Bundle\CacheBundle\Service\RedisSessionHandler
-        arguments:
-            - @werkint_cache.service
-            - @=parameter('session.storage.options')
-            - @=parameter('werkint_redis')['session']['prefix']
-    werkint.redis.doctrinecacher:
-        class: Werkint\Bundle\CacheBundle\Service\DoctrineCacher
-        parent: werkint.redis.provider
-        tags:
-            - { name: werkint.redis.cacheservice, ns: werkint.doctrine }
+  werkint_cache.metadata.annotationdriver:
+    class: %werkint_cache.metadata.annotationdriver.class%
+    arguments:
+      - @annotation_reader
+  werkint_cache.metadata.metadatafactory:
+    class: %werkint_cache.metadata.metadatafactory.class%
+    arguments:
+      - @werkint_cache.metadata.annotationdriver
